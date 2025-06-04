@@ -123,6 +123,7 @@ ul.list {
   .scroll-container {
     width: 95%;
     padding: 10px;
+    padding-bottom: 200px;
   }
   .logo {
     height: 60px;
