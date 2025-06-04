@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CIVIL - 27</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Alumni+Sans+SC:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="header">
+    <img src="https://livingskeleton.github.io/CIVIL-27/logo.png" alt="Logo" class="logo" />
+    <h1 class="heading">CIVIL - 27</h1>
+  </div>
+
+  <div class="content">
+    <div class="scroll-container" id="scrollBox">
+      <ul class="list">
+  <li onclick="showPhoto(this, 'Jami')">Jami</li>
+  <li onclick="showPhoto(this, 'Ali')">Ali</li>
+  <li onclick="showPhoto(this, 'Shahadat')">Shahadat</li>
+  <li onclick="showPhoto(this, 'Rafi')">Rafi</li>
+  <li onclick="showPhoto(this, 'Siam')">Siam</li>
+</ul>
+
+    </div>
+  </div>
+
+  <script>
+    const container = document.getElementById('scrollBox');
+    const scrollDuration = 60000; 
+    const scrollHeight = container.scrollHeight - container.clientHeight;
+    const startTime = performance.now();
+    
+    let currentlyShown = null;
+
+    function showPhoto(clickedElement, name) {
+      if (currentlyShown === clickedElement) {
+        const existing = clickedElement.nextElementSibling;
+        if (existing && existing.classList.contains("photo")) {
+          existing.remove();
+          currentlyShown = null;
+          return;
+        }
+      }
+
+      const allPhotos = document.querySelectorAll(".photo");
+      allPhotos.forEach(p => p.remove());
+
+      const div = document.createElement("div");
+      div.className = "photo";
+
+      const img = document.createElement("img");
+      img.src = `${name}.jpg`;
+      img.alt = name;
+
+      div.appendChild(img);
+
+      clickedElement.parentNode.insertBefore(div, clickedElement.nextSibling);
+
+      currentlyShown = clickedElement;
+    }
+   
+    function autoScroll(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / scrollDuration, 1);
+      container.scrollTop = scrollHeight * progress;
+
+      if (progress < 1) {
+        requestAnimationFrame(autoScroll);
+      }
+    }
+
+    requestAnimationFrame(autoScroll);
+  </script>
+</body>
+</html>
